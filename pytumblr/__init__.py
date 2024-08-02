@@ -38,7 +38,6 @@ class TumblrRestClient(object):
         """
         return self.send_api_request("get", "/v2/user/info")
 
-    @validate_blogname
     def avatar(self, blogname, size=64):
         """
         Retrieves the url of the blog's avatar
@@ -110,7 +109,6 @@ class TumblrRestClient(object):
         kwargs.update({'tag': tag})
         return self.send_api_request("get", '/v2/tagged', kwargs, ['before', 'limit', 'filter', 'tag', 'api_key'], True)
 
-    @validate_blogname
     def posts(self, blogname, type=None, **kwargs):
         """
         Gets a list of posts from a particular blog
@@ -133,7 +131,6 @@ class TumblrRestClient(object):
             url = '/v2/blog/{}/posts/{}'.format(blogname, type)
         return self.send_api_request("get", url, kwargs, ['id', 'tag', 'limit', 'offset', 'before', 'reblog_info', 'notes_info', 'filter', 'api_key', 'npf'], True)
 
-    @validate_blogname
     def blog_info(self, blogname):
         """
         Gets the information of the given blog
@@ -146,7 +143,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/info".format(blogname)
         return self.send_api_request("get", url, {}, ['api_key'], True)
 
-    @validate_blogname
     def blog_following(self, blogname, **kwargs):
         """
         Gets the publicly exposed list of blogs that a blog follows
@@ -165,7 +161,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/following".format(blogname)
         return self.send_api_request("get", url, kwargs, ['limit', 'offset'])
 
-    @validate_blogname
     def followers(self, blogname, **kwargs):
         """
         Gets the followers of the given blog
@@ -180,7 +175,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/followers".format(blogname)
         return self.send_api_request("get", url, kwargs, ['limit', 'offset'])
 
-    @validate_blogname
     def blog_likes(self, blogname, **kwargs):
         """
         Gets the current given user's likes
@@ -197,7 +191,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/likes".format(blogname)
         return self.send_api_request("get", url, kwargs, ['limit', 'offset', 'before', 'after'], True)
 
-    @validate_blogname
     def queue(self, blogname, **kwargs):
         """
         Gets posts that are currently in the blog's queue
@@ -211,7 +204,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/posts/queue".format(blogname)
         return self.send_api_request("get", url, kwargs, ['limit', 'offset', 'filter', 'npf'])
 
-    @validate_blogname
     def drafts(self, blogname, **kwargs):
         """
         Gets posts that are currently in the blog's drafts
@@ -222,7 +214,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/posts/draft".format(blogname)
         return self.send_api_request("get", url, kwargs, ['filter', 'npf'])
 
-    @validate_blogname
     def submission(self, blogname, **kwargs):
         """
         Gets posts that are currently in the blog's submission list
@@ -235,7 +226,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/posts/submission".format(blogname)
         return self.send_api_request("get", url, kwargs, ['offset', 'filter', 'npf'])
 
-    @validate_blogname
     def follow(self, blogname):
         """
         Follow the url of the given blog
@@ -247,7 +237,6 @@ class TumblrRestClient(object):
         url = "/v2/user/follow"
         return self.send_api_request("post", url, {'url': blogname}, ['url'])
 
-    @validate_blogname
     def unfollow(self, blogname):
         """
         Unfollow the url of the given blog
@@ -285,7 +274,6 @@ class TumblrRestClient(object):
         params = {'id': id, 'reblog_key': reblog_key}
         return self.send_api_request("post", url, params, ['id', 'reblog_key'])
 
-    @validate_blogname
     def create_photo(self, blogname, **kwargs):
         """
         Create a photo post or photoset on a blog
@@ -307,7 +295,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "photo"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def create_text(self, blogname, **kwargs):
         """
         Create a text post on a blog
@@ -327,7 +314,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "text"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def create_quote(self, blogname, **kwargs):
         """
         Create a quote post on a blog
@@ -347,7 +333,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "quote"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def create_link(self, blogname, **kwargs):
         """
         Create a link post on a blog
@@ -368,7 +353,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "link"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def create_chat(self, blogname, **kwargs):
         """
         Create a chat post on a blog
@@ -388,7 +372,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "chat"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def create_audio(self, blogname, **kwargs):
         """
         Create a audio post on a blog
@@ -409,7 +392,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "audio"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def create_video(self, blogname, **kwargs):
         """
         Create a audio post on a blog
@@ -430,7 +412,6 @@ class TumblrRestClient(object):
         kwargs.update({"type": "video"})
         return self._send_post(blogname, kwargs)
 
-    @validate_blogname
     def reblog(self, blogname, **kwargs):
         """
         Creates a reblog on the given blogname
@@ -450,7 +431,6 @@ class TumblrRestClient(object):
             kwargs['tags'] = ",".join(kwargs['tags'])
         return self.send_api_request('post', url, kwargs, valid_options)
 
-    @validate_blogname
     def delete_post(self, blogname, id):
         """
         Deletes a post with the given id
@@ -463,7 +443,6 @@ class TumblrRestClient(object):
         url = "/v2/blog/{}/post/delete".format(blogname)
         return self.send_api_request('post', url, {'id': id}, ['id'])
 
-    @validate_blogname
     def edit_post(self, blogname, **kwargs):
         """
         Edits a post with a given id
@@ -488,7 +467,6 @@ class TumblrRestClient(object):
         valid_options = ['id'] + self._post_valid_options(kwargs.get('type', None))
         return self.send_api_request('post', url, kwargs, valid_options)
 
-    @validate_blogname
     def notes(self, blogname, id, **kwargs):
         """
         Gets the notes
